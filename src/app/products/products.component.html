@@ -1,0 +1,79 @@
+<div class="pageWrapper">
+    <div class="row">
+        <div class="col-12 productBanner">
+            <img *ngIf="objCategoryImg==''" src="../../assets/img/Advertisment.png" alt="image" />
+            <img *ngIf="objCategoryImg!=''" src="{{objCategoryImg}}" alt="image" />
+        </div>
+    </div>
+    <!--Advertisment Section-->
+    <div class="row mt-5" *ngIf="!IsShowFilter">
+        <h2><b>Search Result</b></h2>
+        <div class="col-lg-3 col-md-12 mb-4">
+            <div class="productInfo" (click)="!searchedProduct.isAdded && openProductInfoModalPopup(searchedProduct,objCatdata)"> 
+                <img src="{{searchedProduct.productImage}}" alt="image" />
+                <p>{{currencySymbol}}{{searchedProduct.price | number : '1.2-2'}}</p>
+                <h3 title="{{searchedProduct.productName}}">{{searchedProduct.productName }}</h3>              
+                <button type="button" [class.disabled] = "searchedProduct.isAdded === true">{{ searchedProduct.isAdded == true ? 'Added' : 'Add to cart' }}</button>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="filterSidebar" *ngIf="IsShowFilter">
+            <button class="filterBtn" data-bs-toggle="collapse" href="#filterCollapse" role="button" aria-expanded="false"
+                aria-controls="collapseExample">Filter
+            </button>
+            <div class="collapse d-lg-block" id="filterCollapse">
+                <div class="filterSec">
+                    <h2>Sub Category</h2>
+                    <ul>
+                        <li *ngFor="let subCat of objSubcat">
+                            <label>
+                                <input type="checkbox" value="{{subCat.id}}"
+                                    (click)="onSubCatSelect(subCat.id || 0)" />{{subCat.name}}
+                                    ({{subCat.totalProductCount}})
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="filterSec">
+                    <h2>Brands</h2>
+                    <ul>
+                        <li *ngFor="let brand of objBrandVM">
+                            <label>
+                                <input type="checkbox" value="{{brand.id}}"
+                                    (click)="onBrandSelect(brand.id || 0)" />{{brand.name }}
+                                    ({{brand.totalProductCount}})
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="filterResult" [ngClass]="{'col-12': !IsShowFilter,'filterResult':IsShowFilter}">
+            <div class="row mb-4" *ngFor="let subCat of objProductsDataList;let index = index">
+                <div class="col-12 mb-3">
+                    <div class="sectionHeading">
+                        <h2>{{subCat.subCategoryName}}</h2>
+                    </div>
+                </div>
+                <div class="col-12 mb-lg-5 mb-2">
+                    <ul class="productDetailSection">
+                        <li *ngFor="let prod of subCat.products;let j = index" (click)="!prod.isAdded && openProductInfoModalPopup(prod,subCat)">
+                            <div class="productInfo">
+                                <img src="{{prod.productImage}}" alt="image" />
+                                <div class="pt-2 pb-1 productPrice">
+                                    <span class="oldPrice" [ngClass]="{'oldPrice': prod.offerType=='2' || prod.offerType=='1','':''}">{{currencySymbol}}{{prod.price | number : '1.2-2'}}</span>
+                                    <span class="newPrice" *ngIf="prod.offerType=='2' || prod.offerType=='1'">/ {{currencySymbol}}{{prod.finalValue | number :'1.2-2'}}</span>
+                                    <span class="buyOneGetFree" *ngIf="prod.offerType=='1'">/ {{prod.finalOfferValue}}</span>
+                                    <span class="buyOneGetFree" *ngIf="prod.offerType=='0'">/ {{prod.finalValue}}</span>
+                                </div>
+                                <h3 title="{{prod.productName}}">{{prod.productName }}</h3>
+                                <button type="button" [class.disabled]="prod.isAdded === true">{{ prod.isAdded == true ? 'Added' : 'Add to cart'}}</button>
+                            </div> 
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

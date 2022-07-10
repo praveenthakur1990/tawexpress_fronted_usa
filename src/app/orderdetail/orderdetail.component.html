@@ -1,0 +1,78 @@
+<div class="modal-header">
+    <div class="orderTrackHeading" id="modal-basic-title">Order Detail</div>
+    <button type="button" class="modalClose" aria-label="Close" (click)="closeModal('Cross click')">
+        <span aria-hidden="true">×</span>
+    </button>
+</div>
+<div class="orderDetail">
+    <div class="row">
+        <div class="col-3 orderRow">
+            <h6>Order Number</h6>
+            <p>{{orderDetail.orderNo}}</p>
+        </div>
+        <div class="col-4 orderRow">
+            <h6>Order Date</h6>
+            <p>{{orderDetail.orderedDate | date:'medium'}}</p>
+        </div>
+        <div class="col-3 orderRow">
+            <h6>Order Total</h6>
+            <p>{{currencySymbol}}{{orderDetail.capturedAmt}}</p>
+        </div>
+        <div class="col-2 orderRow">
+            <h6>Order Status</h6>
+            <p class="orderOutDelivery" *ngIf="orderDetail.status=='A'">Accepted</p>
+            <p class="orderOutDelivery" *ngIf="orderDetail.status=='C'">Cancelled</p>
+            <p class="orderOutDelivery" *ngIf="orderDetail.status=='R'">Rejected</p>
+            <p class="orderOutDelivery" *ngIf="orderDetail.status=='O'">Out of delivery</p>
+            <p class="orderOutDelivery" *ngIf="orderDetail.status=='D'">Delivered</p>
+        </div>
+    </div>
+</div>
+<div class="modal-body">
+    <div class="orderSucess">          
+        <div class="productList">
+            <div class="productListRow" *ngFor="let item of orderDetail.orderDetail">
+                <div class="productListRowLeft">
+                    <img src="{{item.productImg}}" />
+                    <h4><span>{{item.categoryName}}</span>{{item.productName}}</h4>
+                    <p *ngIf="item.offerType=='1'" class="discountOffer">{{item.finalOfferValue}}</p>
+                    <p *ngIf="item.offerType=='0'" class="buyOneGetFree">{{item.finalValue}}</p>    
+                    <p *ngIf="item.offerType=='0'">{{item.qty}} X {{currencySymbol}}{{item.price | number : '1.2-2'}} per lb</p>
+                    <p *ngIf="item.offerType=='1' || item.offerType=='2'">{{item.qty}} X {{currencySymbol}}{{item.finalValue | number : '1.2-2'}} per lb</p>
+                    
+                </div>
+                <div class="productListRowRight">
+                    <p>{{currencySymbol}}{{item.totalPrice | number : '1.2-2'}}</p>
+                </div>
+            </div>               
+        </div>
+    </div>
+</div>
+<div class="orderAmount">
+    <div class="checkAmountRow">
+        <div>Subtotal</div>
+        <div>{{currencySymbol}}{{orderDetail.subTotal | number : '1.2-2'}}</div>
+    </div>
+    <div class="checkAmountRow">
+        <div>Delivery Charges</div>
+        <div>{{currencySymbol}}{{orderDetail.deliveryCharges | number : '1.2-2'}}</div>
+    </div>
+    <div class="checkAmountRow">
+        <div>Taxes({{orderDetail.taxRate}}%)</div>
+        <div>{{currencySymbol}}{{orderDetail.taxAmount | number : '1.2-2'}}</div>
+    </div>
+    <div class="orderTotalAmount">
+        <div>Total Paid Amount</div>
+        <div>{{currencySymbol}}{{orderDetail.capturedAmt | number : '1.2-2'}}</div>
+    </div>
+    <div class="orderStatusRow">
+        <div class="orderStatusRowLeft" *ngIf="orderDetail.orderType=='H'">
+            <h5>Delivery Address</h5>
+            <p>{{orderDetail.address}} {{orderDetail.city}} {{orderDetail.state}} {{orderDetail.zipCode}}</p>
+        </div>
+        <div class="orderStatusRowRight">
+            <button>Cancel Order</button>
+            <button class="trackButton">Track Order</button>
+        </div>
+    </div>
+</div>

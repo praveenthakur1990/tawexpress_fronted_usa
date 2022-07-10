@@ -1,0 +1,50 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12 productBanner">
+            <img src="../../assets/img/Advertisment.png" alt="image" />
+        </div>
+    </div>
+    <tabset *ngIf="isShowPanel">
+        <h3>{{objWeeklyCircularInfo.title}}</h3>
+        <select class="form-control" (change)="bindProducts($event)">
+            <option value="0">--Select--</option>
+            <option *ngFor="let item of objWeeklyCircularDates; let index = index" value={{item.id}}
+                [selected]="index===0">
+                {{item.weeklyCircularDates}}
+            </option>
+        </select>
+        <tab heading="Grid View">
+            <ng-multiselect-dropdown [placeholder]="'Select Categories'" [settings]="dropdownSettings"
+                [data]="objCategoriesArr" [(ngModel)]="selectedItems" (onSelect)="onItemSelect($event)"
+                (onDeSelect)="onItemDeSelect($event)">
+            </ng-multiselect-dropdown>
+            <div class="row mt-5">
+                <div class="col-12">
+                    <div class="mb-4" *ngFor="let subCat of objProductsDataList;let index = index">
+                        <div class="row">
+                            <div class="col-3 mb-4" *ngFor="let prod of subCat.products;let j = index"
+                                (click)="openProductInfoModalPopup(prod,subCat)">
+                                <div class="productInfo">
+                                    <p *ngIf="prod.offerType=='1'" class="discountOffer">{{prod.finalOfferValue}}</p>
+                                    <img src="{{prod.productImage}}" alt="image" />
+                                    <p *ngIf="prod.offerType=='0'" class="buyOneGetFree">{{prod.finalValue}}</p>
+                                    <p  [ngClass]="{'oldPrice': prod.offerType=='2','':''}">{{currencySymbol}}{{prod.price | number : '1.2-2'}}</p>
+                                    <p *ngIf="prod.offerType=='2'" class="newPrice">{{currencySymbol}}{{prod.finalValue | number
+                                        :'1.2-2'}}</p>
+                                    <h3 title="{{prod.productName}}">{{prod.productName }}</h3>
+                                    <!-- <button type="button" [class.disabled]="prod.isAdded === true">{{ prod.isAdded ==
+                                        true ? 'Added' : 'Add to cart' }}</button> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <span *ngIf="objProductsDataList.length==0">No data found</span>
+                </div>
+            </div>
+        </tab>
+        <tab heading="Print View">
+
+        </tab>
+    </tabset>
+    <span *ngIf="!isShowPanel">No weekly circular found</span>
+</div>

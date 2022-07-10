@@ -1,0 +1,26 @@
+<div class="modal-body">
+    <div class="container-fluid">
+        <div class="row">
+            <form [formGroup]="OTPForm" (ngSubmit)="verifyOTP()">
+                <div class="loginPopup">
+                    <div class="loginHeading">
+                        <h2 class="pb-1">OTP has been sent on your regsitered mobile number.</h2>
+                        <button type="button" class="close" aria-label="Close" (click)="closeModal('Cross click')">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="loginPopupRow">
+                        <input type="text" (keypress)="numberOnly($event)" formControlName="otp" class="form-control" placeholder="Enter OTP" [ngClass]="{ 'is-invalid': submitted && o.otp.errors }" />
+                        <div *ngIf="submitted && o.otp.errors" class="invalid-feedback">
+                            <div *ngIf="o.otp.errors.required">OTP is required</div>
+                            <div *ngIf="o.otp.errors.pattern">Enter valid OTP</div>  
+                        </div>
+                    </div>
+                    <div class="loginPopupRow">
+                        <button type="submit" class="loginBtn">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

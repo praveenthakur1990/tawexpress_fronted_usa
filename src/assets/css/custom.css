@@ -1,0 +1,6 @@
+p.oldPrice, div.oldPrice{
+    text-decoration: line-through;
+}
+.carousel-inner .sr-only {
+    display: none;
+ }

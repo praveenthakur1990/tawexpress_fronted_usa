@@ -1,0 +1,14 @@
+<h1>Login to continue</h1>
+<p>Use your registered number & view latest weekly circular of FoodTown of Vallery Cottage</p>
+<form [formGroup]="loginForm" (ngSubmit)="login()">
+    <input type="text" formControlName="mobileNumber" (keypress)="numberOnly($event)" maxlength="10"
+        placeholder="Enter your mobile number" class="inputBox"
+        [ngClass]="{ 'is-invalid': submitted && r.mobileNumber.errors }" />
+    <div *ngIf="submitted && r.mobileNumber.errors" class="invalid-feedback">
+        <div *ngIf="r.mobileNumber.errors.required">Mobile number is required</div>
+        <div *ngIf="r.mobileNumber.errors.pattern">Enter valid mobile number</div>
+        <div *ngIf="r.mobileNumber.errors.maxlength">Mobile number should be less than 10 digit</div>
+        <div *ngIf="r.mobileNumber.errors.minlength">Mobile number should be 10 digit</div>
+    </div>
+    <button class="yesButton">Continue</button>
+</form>

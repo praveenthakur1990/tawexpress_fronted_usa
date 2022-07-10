@@ -1,0 +1,31 @@
+<div class="modal-body">
+    <div class="container-fluid">
+        <div class="row">
+            <form [formGroup]="loginForm" (ngSubmit)="login()">
+                <div class="loginPopup">
+                    <div class="loginHeading">
+                        <h2 class="pb-1"><b>Welcome to Store Name</b></h2>
+                        <p>We make it easy for everyone to buy from local store</p>
+                        <button type="button" class="close" aria-label="Close" (click)="closeModal('Cross click')">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="loginPopupRow">
+                        <input type="text" formControlName="mobileNumber" class="form-control"
+                            placeholder="Enter Username"
+                            [ngClass]="{ 'is-invalid': submitted && l.mobileNumber.errors }" />
+                        <div *ngIf="submitted && l.mobileNumber.errors" class="invalid-feedback">
+                            <div *ngIf="l.mobileNumber.errors.required">Username is required</div>
+                        </div>
+                    </div>
+                    <div class="loginPopupRow">
+                        <button type="submit" class="loginBtn">Continue with login</button>
+                    </div>
+                    <div class="loginHighlight">
+                        Not registered yet?<a (click)="openRegisterModal()"> Create an Account</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

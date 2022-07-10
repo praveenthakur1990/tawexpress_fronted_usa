@@ -1,0 +1,54 @@
+<div class="productDetailPopup">
+    <form [formGroup]="addToCartForm" (ngSubmit)="addToCart()">
+        <div class="popupProductSec">
+            <button type="button" class="productClose" aria-label="Close" (click)="closeModal('dismiss')"
+                data-dismiss="modal">
+                <span aria-hidden="true">×</span>
+            </button>
+            <div class="popupProductLeft">
+                <img src="{{objProductInfo.productImage}}" alt="image" />
+            </div>
+            <div class="popupProductRight">
+                <span>{{objProductsData.categoryName}}</span>
+                <div class="productName">{{objProductInfo.productName}}</div>
+                <div *ngIf="objProductInfo.offerType=='1'" class="discountOffer">{{objProductInfo.finalOfferValue}}</div>
+                <div *ngIf="objProductInfo.offerType=='0'" class="buyOneGetFree">{{objProductInfo.finalValue}}</div>                
+                <div [ngClass]="{'oldPrice': objProductInfo.offerType=='2' || objProductInfo.offerType=='1' ,'':''}">{{currencySymbol}}{{objProductInfo.price | number : '1.2-2'}}</div>
+                <div *ngIf="objProductInfo.offerType=='2' ||objProductInfo.offerType=='1'" class="newPrice">{{currencySymbol}}{{objProductInfo.finalValue | number :'1.2-2'}}</div>
+                <div class="productVariant" *ngIf="objProductInfo.isVarient">
+                    <p>Available in:</p>
+                    <select (change)='onOptionsSelected($event)'>
+                        <option *ngFor="let obj of objProductInfo.productVarients" [value]="obj.id">{{obj.name}}
+                        </option>
+                    </select>
+                </div>
+                <div class="quantityText" *ngIf="!isWeeklyCircular">
+                    <input type="text" (keypress)="numberOnly($event)" formControlName="qty"
+                        placeholder="Enter Quantity" [ngClass]="{ 'is-invalid': submitted && c.qty.errors }">
+                    <div *ngIf="submitted && c.qty.errors" class="invalid-feedback">
+                        <div *ngIf="c.qty.errors.required">Quantity is required</div>
+                        <div *ngIf="c.qty.errors.pattern">Enter valid quantity</div>
+                        <div *ngIf="c.qty.errors.min">Quantity should be greater than 0</div>
+                    </div>
+                </div>
+                <button type="submit" *ngIf="!isWeeklyCircular" class="proceedBtn"><i class="icon-cart customIcon"></i>Add to cart</button>
+                <div class="minOrderCart" *ngIf="minOrderAmt!=0">
+                    <p>{{currencySymbol}}{{minOrderAmt | number : '1.2-2'}} cart minimum to order</p>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="relatedProductSec" *ngIf="!isWeeklyCircular">
+        <h2><b>More like this</b></h2>
+        <div class="row">
+            <div class="col-3 mb-4" *ngFor="let prod of objProductsData.products;let j = index" (click)="!prod.isAdded && openProductInfoModalPopup(prod,objProductsData)">
+                <div class="productInfo">
+                    <img src="{{prod.productImage}}" alt="image" />
+                    <p>{{currencySymbol}}{{ prod.price | number : '1.2-2' }}</p>
+                    <h3 title="{{prod.productName}}">{{prod.productName}}</h3>
+                    <button type="button" [class.disabled]="prod.isAdded === true"><i class="icon-cart customIcon"></i>{{ prod.isAdded == true ? 'Added' : 'Add to cart' }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

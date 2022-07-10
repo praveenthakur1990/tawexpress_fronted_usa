@@ -1,0 +1,86 @@
+<div class="container mt-5 min-height">
+    <div class="row">
+        <div class="col-8 checkoutLeft">
+            <div class="row">
+                <div class="col-12 checkouttype">
+                    <h3>What do you want</h3>
+                    <div class="checkoutTypeLabel">                      
+                        <label class="customCheckBox" [ngClass]="{'activeLabel' : orderType=='H'}">
+                            <input type="radio" [checked]="orderType == 'H'" name="orderType" value="H"
+                                (click)="onSelectOrderType('H')" />Home Delivery <span class="checkmark"></span>
+                        </label>                
+                        <label class="customCheckBox" [ngClass]="{'activeLabel' : orderType=='S'}">
+                            <input type="radio" [checked]="orderType == 'S'" name="orderType" value="S"
+                                (click)="onSelectOrderType('S')" />Self Pickup<span class="checkmark"></span>
+                        </label>       
+                    </div>
+                </div>
+                <!--checkout Type-->
+                <div class="col-12  deliverySec" *ngIf="orderType=='H'">
+                    <app-delivery-addresses></app-delivery-addresses>
+                </div>
+                <!--Delivery Address-->
+                <div class="col-12 deliverySlot" *ngIf="orderType=='H' && isShowDeliverySlot">
+                    <app-delivery-slot></app-delivery-slot>
+                </div>
+                <!--Delivery Slots-->
+                <div class="col-12 deliverySec" *ngIf="orderType=='S'">
+                    <h3>Pickup Address</h3>
+                    <div id="addressList">
+                        <div class="addressListrow">
+                            <label class="customCheckBox">
+                                <input type="radio" name="address" id="" checked /><span class="checkmark"></span>
+                                <div class="addressRow">
+                                    <h5>{{objStoreVM.name}}</h5>
+                                    <p>{{objStoreVM.address}}</p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-4 checkoutRight">
+            <div class="ps-5">
+                <h3>Order Summary</h3>
+                <div class="cartProduct">
+                    <div class="cartProductRow row" *ngFor="let cartItem of objCarttems; let i=index">
+                        <div class="cartProductRowLeft col-9">
+                            <img src="{{cartItem.productImg}}" />
+                            <h4>{{cartItem.productName}}</h4>
+                            <p *ngIf="cartItem.offerType=='0'" class="buyOneGetFree">{{cartItem.finalValue}}</p>
+                            <p *ngIf="cartItem.offerType=='1'" class="discountOffer">{{cartItem.finalOfferValue}}</p>
+                            <p *ngIf="cartItem.offerType=='0' || cartItem.offerType==null">{{cartItem.qty}} X {{currencySymbol}}{{cartItem.price | number : '1.2-2'}} per lb</p>
+                            <p *ngIf="cartItem.offerType=='1' || cartItem.offerType=='2'">{{cartItem.qty}} X {{currencySymbol}}{{cartItem.finalValue | number : '1.2-2'}} per lb</p>
+                        </div>
+                        <div class="cartProductRowRight col-3">
+                            <p>{{currencySymbol}}{{cartItem.totalPrice | number : '1.2-2'}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="checkAmount">
+                    <div class="row pb-3">
+                        <div class="col-8">Subtotal</div>
+                        <div class="col-4 text-end">{{currencySymbol}}{{totalAmt | number : '1.2-2'}}</div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col-8">Delivery Charges</div>
+                        <div class="col-4 text-end">{{currencySymbol}}{{objStoreVM.deliveryCharges | number : '1.2-2'}}</div>
+                    </div>
+                    <div class="row pb-3" *ngIf="objStoreVM.taxRate || 0 > 0">
+                        <div class="col-8">Taxes({{objStoreVM.taxRate}}%)</div>
+                        <div class="col-4 text-end">{{currencySymbol}}{{objStoreVM.taxAmt | number : '1.2-2'}}</div>
+                    </div>
+                    <div class="row pb-4 totalAmount">
+                        <div class="col-8">Total Payable Amount</div>
+                        <div class="col-4 text-end">{{currencySymbol}}{{finalAmt | number : '1.2-2'}}</div>
+                    </div>
+                    <button class="checkoutBtn" (click)="checkout(finalAmt)">Proceed For Payment</button>
+                    <span id="payBtn" (click)="doPayment()"></span>
+                    <input type="hidden" id="HToken" />
+                    <input type="hidden" id="HEmail" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

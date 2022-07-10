@@ -1,0 +1,69 @@
+<div class="pageWrapper">
+    <div class="orderSucess mt-5 mb-5">
+        <div class="orderStatusTitle">
+            <img src="../../assets/img/sucess-order.png"/>
+            <h3>We’ve recevied your oder</h3>
+            <p>Order Number: {{objOrderResponse.orderNo}}</p>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <div class="productList">
+                    <div class="productListRow" *ngFor="let item of objOrderResponse.orderDetail;let index = index">
+                        <div class="productListRowLeft">
+                            <img src="{{item.productImg}}" />
+                            <h4><span>{{item.categoryName}}</span>{{item.productName}}</h4>
+                            <p *ngIf="item.offerType=='1'" class="discountOffer">{{item.finalOfferValue}}</p>
+                            <p *ngIf="item.offerType=='0'" class="buyOneGetFree">{{item.finalValue}}</p>
+                            <p *ngIf="item.offerType=='0'">{{item.qty}} X {{currencySymbol}}{{item.price | number : '1.2-2'}} per lb</p>
+                            <p *ngIf="item.offerType=='1' || item.offerType=='2'">{{item.qty}} X {{currencySymbol}}{{item.finalValue |
+                                number : '1.2-2'}} per lb</p>
+                            <!-- <p>{{item.qty}} x {{item.price | number : '1.2-2'}} per lb*</p> -->
+                        </div>
+                        <div class="productListRowRight">
+                            <p>{{currencySymbol}}{{item.totalPrice | number : '1.2-2'}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="orderDetail">
+                    <div class="row">
+                        <div class="col-12 orderRow mb-3">
+                            <h6>Order Date</h6>
+                            <p>{{objOrderResponse.orderedDate | date:'medium'}}</p>
+                        </div>
+                        <div class="col-12 orderRow mb-3">
+                            <h6>Order Status</h6>
+                            <p>Order Accepted</p>
+                        </div>
+                        <div class="col-12 orderRow mb-3">
+                            <h6>Order Total</h6>
+                            <p>{{currencySymbol}}{{objOrderResponse.capturedAmt | number : '1.2-2'}}</p>
+                        </div>
+                        <div class="col-12 orderRow mb-3">
+                            <button type="button">Cancel Order</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="orderAmount">
+                    <div class="checkAmountRow">
+                        <div>Subtotal</div>
+                        <div>{{currencySymbol}}{{objOrderResponse.capturedAmt | number : '1.2-2'}}</div>
+                    </div>
+                    <div class="checkAmountRow">
+                        <div>Delivery Charges</div>
+                        <div>{{currencySymbol}}{{objOrderResponse.deliveryCharges | number : '1.2-2'}}</div>
+                    </div>
+                    <div class="checkAmountRow">
+                        <div>Taxes({{objOrderResponse.taxRate}}%)</div>
+                        <div>{{currencySymbol}}{{objOrderResponse.taxAmount | number : '1.2-2'}}</div>
+                    </div>
+                    <div class="orderTotalAmount">
+                        <div>Total Payable Amount</div>
+                        <div>{{currencySymbol}}{{objOrderResponse.capturedAmt | number : '1.2-2'}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

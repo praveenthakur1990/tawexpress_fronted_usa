@@ -1,0 +1,66 @@
+<div class="modal-body">
+    <div class="container-fluid">
+        <div class="row">
+            <form [formGroup]="registerForm" (ngSubmit)="register()">
+                <div class="loginPopup">
+                    <div class="loginHeading">
+                        <h2 class="pb-2"><b>Sign Up</b></h2>
+                        <p>Welcome to <b>Store Name</b>! Enter your email and mobile number to get started.</p>
+                        <button type="button" class="close" aria-label="Close" (click)="closeModal('Cross click')">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="loginPopupRow inputMargin">
+                        <input type="text" formControlName="userId" class="form-control" placeholder="Enter Username"
+                            [ngClass]="{ 'is-invalid': submitted && r.userId.errors }" maxlength="10" />
+                        <div *ngIf="submitted && r.userId.errors" class="invalid-feedback">
+                            <div *ngIf="r.userId.errors.required">Username is required</div>
+                            <div *ngIf="r.userId.errors.maxlength">Username maxlength exceeds</div>
+                            <div *ngIf="r.userId.errors.minlength">Username should be 6 character</div>
+                        </div>
+                    </div>
+                    <div class="loginPopupRow inputMargin">
+                        <input type="text" formControlName="firstName" maxlength="50" class="form-control" placeholder="Enter First Name" [ngClass]="{ 'is-invalid': submitted && r.firstName.errors }" />
+                        <div *ngIf="submitted && r.firstName.errors" class="invalid-feedback">
+                            <div *ngIf="r.firstName.errors.required">Firstname is required</div>
+                            <div *ngIf="r.firstName.errors.maxlength">Firstname maxlength exceeds</div>
+                        </div>
+                    </div>     
+                    <div class="loginPopupRow inputMargin">
+                        <input type="text" formControlName="lastName" maxlength="50" class="form-control" placeholder="Enter Last Name" [ngClass]="{ 'is-invalid': submitted && r.lastName.errors }" />
+                        <div *ngIf="submitted && r.lastName.errors" class="invalid-feedback">
+                            <div *ngIf="r.lastName.errors.required">Lastname is required</div>
+                            <div *ngIf="r.lastName.errors.maxlength">Lastname maxlength exceeds</div>
+                        </div>
+                    </div>     
+                    <div class="loginPopupRow inputMargin">
+                        <input type="text" formControlName="email" maxlength="100" class="form-control" placeholder="Enter Email Address" [ngClass]="{ 'is-invalid': submitted && r.email.errors }" />
+                        <div *ngIf="submitted && r.email.errors" class="invalid-feedback">
+                            <div *ngIf="r.email.errors.required">Email is required</div>
+                            <div *ngIf="r.email.errors.email">Email must be a valid email address</div>
+                            <div *ngIf="r.email.errors.maxlength">Email maxlength exceeds</div>
+                        </div>
+                    </div>     
+                    <div class="loginPopupRow inputMargin">
+                        <input type="text" (keypress)="numberOnly($event)" maxlength="10" formControlName="mobileNumber" class="form-control" placeholder="Enter Mobile Number" [ngClass]="{ 'is-invalid': submitted && r.mobileNumber.errors }" />
+                        <div *ngIf="submitted && r.mobileNumber.errors" class="invalid-feedback">
+                            <div *ngIf="r.mobileNumber.errors.required">Mobile number is required</div>
+                            <div *ngIf="r.mobileNumber.errors.pattern">Enter valid mobile number</div>  
+                            <div *ngIf="r.mobileNumber.errors.maxlength">Mobile number should be less than 10 digit</div>  
+                            <div *ngIf="r.mobileNumber.errors.minlength">Mobile number should be 10 digit</div>  
+                        </div>
+                    </div>                         
+                    <div class="loginPopupRow inputMargin">
+                        <span>We will send a text with a verification code. By continuing, you agree to our <a href="#">Terms of Service & Privacy Policy</a></span>  
+                    </div>
+                    <div class="loginPopupRow">
+                        <button type="submit" class="loginBtn">Continue</button>
+                    </div>
+                    <div class="loginHighlight">
+                        Already have account?<a (click)="openLoginModal()"> Click here to login</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

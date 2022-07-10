@@ -1,0 +1,134 @@
+.welcomeBanner{
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    left: 0px;
+    z-index: 1;
+}
+.welcomeBlockHeight{
+    height: 30%;
+}
+.loginBlockHeight{
+    height: 35%;
+}
+.signupBlockHeight{
+    height: 46%;
+}
+.mesageBlock{
+    background-color: #fff;
+    padding: 30px 20px 30px 20px;
+    text-align: center;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    left: 0px;
+    z-index: 999;
+    box-shadow: 0px 0px 80px 0px #00000052;
+}
+.mesageBlock h1{
+    color: #000000;
+    font-size: 26px;
+    font-weight: 600;
+    margin: 0px 0px 10px 0px;
+}
+.mesageBlock p{
+    color: #4d4d4d;
+    font-size: 15px;
+    margin: 0px 0px 10px 0px;
+}
+.mesageBlock span{
+    color: #a0a0a0;
+    font-size: 12px;
+    margin: 0px 0px 10px 0px;
+}
+.mesageBlock button{
+    border: none;
+    border-radius: 6px;
+    width: 100%;
+    height: 60px;
+    color: #ffffff;
+    margin: 0px 0px 15px 0px;
+}
+.mesageBlock .noButton{
+    background-color: #000000;
+}
+.mesageBlock .yesButton{
+    background-color: #71b104;
+}
+.inputBox{
+    border: 1px solid #dfdfdf;
+    border-radius: 6px;
+    width: 100%;
+    height: 60px;
+    margin: 15px 0px 15px 0px;
+    text-align: center;
+    font-size: 18px;
+}
+.termsBlock{
+    margin: 10px 0px 20px 0px;
+    font-size: 13px;
+}
+.termsBlock input[type="checkbox"]{
+    margin: 0px 8px 0px 0px;
+}
+.termsBlock a{
+    color: #71b104;
+}
+.store-banner{
+    background-color: #ffffff;
+    padding: 20px 20px;
+    box-shadow: 3px 2px 5px 0px #e1e1e1;
+    margin: 0px 0px 20px 0px;
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    left: 0px;
+}
+.storeLogo{
+    width: 50px;
+    height: 50px;
+    border-radius: 6px;
+    float: left;
+    margin: 0px 10px 0px 0px;
+}
+.store-banner h2{
+    font-size: 18px;
+    font-weight: 700;
+    color: #000000;
+    margin: 5px 0px 5px 0px;
+}
+.store-banner p{
+    font-size: 13px;
+    color: #000000;
+    margin: 0px 0px 0px 0px;
+}
+.weeklyCircularSec{
+    margin: 110px 0px 0px 0px;
+}
+.weeklyCircular{
+    border: 1px solid #d0d0d0;
+    border-radius: 4px;
+    padding: 10px;
+    margin: 0px 0px 20px 0px;
+    display: inline-block;
+    width: 100%;
+}
+.weeklyCircular p{
+    font-size: 16px;
+    font-weight: 600;
+    color: #000000;
+    margin: 0px 0px 0px 0px;
+}
+.weeklyCircular span{
+    padding: 0px 0px 10px 0px;
+    font-size: 14px;
+    color: #a0a0a0;
+    display: block;
+}
+.weeklyCircular img{
+    border-radius: 8px;
+    width: 100%;
+}

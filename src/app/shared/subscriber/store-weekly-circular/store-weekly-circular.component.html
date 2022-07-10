@@ -1,0 +1,19 @@
+<ngx-ui-loader></ngx-ui-loader>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12 store-banner">
+            <img src="{{objStoreInfo.logoPath}}" alt="logo" title="store-logo" class="storeLogo">
+            <h2>{{objStoreInfo.name}}</h2>
+            <p>{{objStoreInfo.address}}</p>
+        </div>
+        <div class="weeklyCircularSec">
+            <div class="weeklyCircular" *ngFor="let item of weeklyCircularList;let j = index">
+                <a href="{{item.pdfFilePath}}" target="_blank">
+                    <p>{{item.title}}</p>
+                    <span>{{ item.startDate | date:'mediumDate' }} to {{ item.endDate | date:'mediumDate' }}</span>
+                    <img src="{{item.thumbnailImgPath}}" alt="image">
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

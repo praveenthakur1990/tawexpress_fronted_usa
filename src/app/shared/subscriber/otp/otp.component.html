@@ -1,0 +1,7 @@
+<h1>Verification Code</h1>
+<p>OTP has been send to your mobile number. Please verify</p>
+<form [formGroup]="OTPForm" (ngSubmit)="verifyOTP()">
+    <input type="text" placeholder="Enter OTP Code" class="inputBox" (keypress)="numberOnly($event)"
+        formControlName="otp" [ngClass]="{ 'is-invalid': submitted && o.otp.errors }" />
+    <button class="yesButton">Continue</button>
+</form>

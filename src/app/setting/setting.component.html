@@ -1,0 +1,25 @@
+<div class="myAccountBanner">
+    <h2><b>My Account</b></h2>
+</div>
+<div class="container mt-5 mb-5 min-height">
+    <div class="row">
+        <div class="col-lg-3 col-12 myAccountLeft mb-md-3">
+            <button class="filterBtn" data-bs-toggle="collapse" href="#filterCollapse" role="button" aria-expanded="false"
+                aria-controls="collapseExample">My Account Menu
+            </button>
+            <div class="collapse d-lg-block" id="filterCollapse">
+                <ul>
+                    <li [routerLinkActive]="['active']"><a href="javascript:void(0)" [routerLink]="['/setting/my-account']"><i class="icon-profile customIcon"></i>My Account</a></li>
+                    <li [routerLinkActive]="['active']"><a href="javascript:void(0)" [routerLink]="['/setting/my-orders']"><i class="icon-cart customIcon"></i>My Orders</a></li>
+                    <li [routerLinkActive]="['active']"><a href="javascript:void(0)" [routerLink]="['/setting/delivery-addresses']"><i class="icon-location customIcon"></i>Delivery Addresses</a></li>
+                    <li><a href="javascript:void(0)"><i class="icon-document customIcon"></i>Terms & Conditions</a></li>
+                    <li><a href="javascript:void(0)"><i class="icon-help customIcon"></i>Help & support</a></li>
+                    <li><a href="javascript:void(0)" (click)="logout()"><i class="icon-logout customIcon"></i>Logout</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-9 col-12 myAccountRight ps-lg-5 ps-md-3">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

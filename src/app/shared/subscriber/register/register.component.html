@@ -1,0 +1,31 @@
+<h1>Subscribe Weekly Circular</h1>
+<p>Registered you number and subscribe FoodTown of Vallery Cottage Weekly Circular</p>
+<form [formGroup]="registerForm" (ngSubmit)="registerSubscriber()">
+    <input type="text" formControlName="fullName" placeholder="Enter Full Name" class="inputBox"
+        [ngClass]="{ 'is-invalid': submitted && r.fullName.errors }" />
+    <div *ngIf="submitted && r.fullName.errors" class="invalid-feedback">
+        <div *ngIf="r.fullName.errors.required">Fullname is required</div>
+        <div *ngIf="r.fullName.errors.maxlength">Fullname maxlength exceeds</div>
+    </div>
+    <input type="text" (keypress)="numberOnly($event)" maxlength="10" formControlName="mobileNumber"
+        placeholder="Enter Mobile Number" class="inputBox"
+        [ngClass]="{ 'is-invalid': submitted && r.mobileNumber.errors }" />
+    <div *ngIf="submitted && r.mobileNumber.errors" class="invalid-feedback">
+        <div *ngIf="r.mobileNumber.errors.required">Mobile number is required</div>
+        <div *ngIf="r.mobileNumber.errors.pattern">Enter valid mobile number</div>
+        <div *ngIf="r.mobileNumber.errors.maxlength">Mobile number should be less than 10 digit</div>
+        <div *ngIf="r.mobileNumber.errors.minlength">Mobile number should be 10 digit</div>
+    </div>
+
+    <label class="termsBlock">
+        <input type="checkbox" formControlName="termConditionCheck"
+            [ngClass]="{ 'is-invalid': submitted && r.termConditionCheck.errors }" />I accept the privacy <a
+            href="javascript:void(0);">policy & terms
+            and
+            condition</a>
+        <div *ngIf="submitted && r.termConditionCheck.errors" class="invalid-feedback">Please accept the term and
+            condition
+        </div>
+    </label>
+    <button class="yesButton">Continue</button>
+</form>

@@ -1,0 +1,210 @@
+<ngx-ui-loader></ngx-ui-loader>
+<header id="navbar">
+    <div class="pageWrapper">
+        <div class="row secPadding">
+            <div class="col-lg-9 col-12">
+                <button type="button" class="mobileBtn" (click)="openLeftSidebarModal()">
+                    <i class="icon-menu customIcon"></i>Menu
+                </button>
+                <a (click)="redirectToDashboard()"><img src="{{objStoreInfo.logoPath}}" class="primary_logo" /></a>
+                <div class="headerSearch">
+                    <ng-autocomplete [data]="objProductArr" [searchKeyword]="keyword" placeholder="Search Product"
+                        (selected)='selectEvent($event)' (inputChanged)='onChangeSearch($event)'
+                        (inputFocused)='onFocused($event)' historyIdentifier="objProductArr"
+                        [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
+                    </ng-autocomplete>
+                    <ng-template #itemTemplate let-item>
+                        <img src="{{item.image}}" class="productSearchImage">
+                        <a [innerHTML]="item.name" class="productSearchName"></a>
+                    </ng-template>
+                    <ng-template #notFoundTemplate let-notFound>
+                        <div [innerHTML]="notFound"></div>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="col-lg-3 col-8 d-none d-lg-block">
+                <div class="loginSignupBtn" *ngIf='!(_accountService.isLoggedIn$ | async)'>
+                    <button type="button" (click)="openLoginModal()" class="loginBtn"><i
+                            class="icon-profile customIcon"></i>Log in</button>
+                    <button type="button" (click)="openRegisterModal()" class="signupBtn ms-3">Sign up</button>
+                </div>
+                <div class="loginNav" *ngIf='_accountService.isLoggedIn$ | async'>
+                    <ul>
+                        <li (click)="openNav()" class="myCartBtn"><i class="icon-cart customIcon"></i> My Cart<span
+                                *ngIf="totalCartItemCount > 0">({{totalCartItemCount}})</span></li>
+                        <li>
+                            <ul>
+                                <div ngbDropdown class="d-inline-block">
+                                    <button class="userProfileBtn" id="dropdownBasic1" ngbDropdownToggle><i
+                                            class="icon-profile"></i></button>
+                                    <!--<button class="userProfileBtn" id="dropdownBasic1"
+                                        ngbDropdownToggle>{{objUser.firstName}}<i class="icon-profile customIcon"></i></button>-->
+                                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="mt-3 rounded-3">
+                                        <li (click)='redirectToProfile()' class="accountNavList"><i
+                                                class="icon-profile customIcon"></i>My Account</li>
+                                        <li (click)='logout()' class="accountNavList"><i
+                                                class="icon-logout customIcon"></i>Logout</li>
+                                    </div>
+                                </div>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="menuBg d-none d-lg-block" *ngIf=isCategoryShow id="navbar">
+    <div class="pageWrapper">
+        <div class="row">
+            <div class="col-lg-6">
+                <div ngbDropdown>
+                    <button class="shopCategoryBtn" id="dropdownBasic1" ngbDropdownToggle><span
+                            class="icon-menu customIcon"></span>Shop by category</button>
+                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                        <div class="row p-3 g-3">
+                            <div class="col-xl-4 col-md-6 col-sm-12 dropDownName" *ngFor="let cat of objCategory">
+                                <div *ngIf='cat.imagePath!="" && cat.imagePath!=null'>
+                                    <img src="{{cat.imagePath}}" alt="img">
+                                </div><a [routerLink]="['/products',cat.id]" ngbDropdownItem>{{cat.name}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="shopOfferBtn" [routerLinkActive]="['active']" [routerLink]="['/specialOffer']"><i
+                        class="icon-offer customIcon"></i> Special Offer</button>
+            </div>
+            <div class="col-lg-6 text-right">
+                <ul class="rightNav">
+                    <li><a href="#"><i class="icon-location customIcon"></i> {{objStoreInfo.address}}</a></li>
+                    <li><a href="#"><i class="icon-track customIcon"></i>Order Tracking</a></li>
+                </ul>
+            </div>
+        </div>
+        <!--<nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li *ngFor="let cat of objCategory" class="nav-item">
+                            <a href="javascript:void(0);" class="nav-link active" aria-current="page">
+                                <img src="{{cat.imagePath}}" alt="img"> -->
+                                <!--<span>{{cat.name}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>-->
+    </div>
+</div>
+
+<div role="main" (scroll)="onWindowScroll($event);">
+    <router-outlet></router-outlet>
+</div>
+
+<!-- Footer -->
+<footer class="footerPadding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 mb-4">
+                <h2>Help</h2>
+                <ul>
+                    <li><a href="#">Refund Policy</a></li>
+                    <li><a href="#">Live Chat with Customer Care</a></li>
+                    <li><a href="#">Track Order</a></li>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Terms and Conditions</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-3 mb-4">
+                <h2>Store Location</h2>
+                <p>{{objStoreInfo.address}}</p>
+                <p><b>Phone:</b> {{objStoreInfo.contactNumber}}</p>
+                <p><b>Email:</b> {{objStoreInfo.email}}</p>
+            </div>
+            <div class="col-lg-3 mb-4">
+                <h2>Opening Hours</h2>
+                <ul>
+                    <li *ngFor="let day of objStoreInfo.businessHourList">
+                        {{day.dayName}}: <span *ngIf="day.isClosed">Close</span>
+                        <span *ngIf="!day.isClosed">{{day.openTime12Hour}} - {{day.closeTime12Hour}}</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-3 mb-4">
+                <h2>Subscribe Newsletter</h2>
+                <div class="newsletterInput">
+                    <input type="text" name="" id="" placeholder="Enter your email address" />
+                    <button>Subscribe <i class="icon-arrow customIcon ms-2"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="copyrightSec">
+        <div class="container">
+            <p>©{{copyRightYer}}, Taw Express. All Rights Reserved.</p>
+        </div>
+    </div>
+</footer>
+<div id="mySidepanel" class="sidepanel" #openCart>
+    <div class="row sideBarHeading">
+        <div class="col-lg-10">
+            <h2><b>My Cart</b></h2>
+        </div>
+        <div class="col-lg-2">
+            <div class="p-3">
+                <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">×</a>
+            </div>
+        </div>
+    </div>
+    <div class="maxHeight">
+        <div class="row sideCartRow" *ngFor="let cartItem of objCarttems; let i=index">
+            <div class="col-lg-3">
+                <img src="{{cartItem.productImg}}" alt="image" class="sideCartImage" />
+            </div>
+            <div class="col-lg-9">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="prodPrice"
+                            [ngClass]="{'oldPrice': cartItem.offerType=='2' || cartItem.offerType=='1' ,'':''}">
+                            {{currencySymbol}}{{cartItem.price | number : '1.2-2'}}</div>
+                        <div *ngIf="cartItem.offerType=='2' ||cartItem.offerType=='1'" class="prodPrice newPrice">
+                            {{currencySymbol}}{{cartItem.finalValue | number : '1.2-2'}}</div>
+                        <div class="prodName">{{cartItem.productName}}</div>
+                        <p *ngIf="cartItem.offerType=='0'" class="buyOneGetFree">{{cartItem.finalValue}}</p>
+                        <p *ngIf="cartItem.offerType=='1'" class="discountOffer">{{cartItem.finalOfferValue}}</p>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-4 text-center">
+                                <input type="text" (keypress)="numberOnly($event)"
+                                    (keyup)="onSearchChange($event,cartItem,i)" value="{{cartItem.qty}}"
+                                    class="qtyInput" />
+                            </div>
+                            <div class="col-lg-4 text-center pt-1">
+                                {{currencySymbol}}{{cartItem.totalPrice | number : '1.2-2'}}
+                            </div>
+                            <div class="col-lg-4 text-center pt-1">
+                                <button (click)="removeItemFromCart(cartItem, i)" class="deleteItem">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="cartProceedBtn" *ngIf="totalAmt > 0">
+        <button type="button" (click)="redirectToCheckout()">Proceed for CheckOut - ({{currencySymbol}}{{totalAmt |
+            number : '1.2-2'}})</button>
+    </div>
+    <div *ngIf="totalAmt == 0" class="sidebarEmptyCart">
+        <h3><b>You Cart Is Currently Empty</b></h3>
+        <p>Before proceed to checkout you must add some products to your shopping cart. You will Find a lot of
+            interesting products on our “Shop” Page.</p>
+    </div>
+</div>
+

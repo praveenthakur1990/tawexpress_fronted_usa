@@ -1,0 +1,122 @@
+<div class="modal-body">
+    <div class="container-fluid">
+        <div class="row loginPopup">
+            <div class="col-12">
+                <div class="loginHeading">
+                    <h2 class="modal-title" id="modal-basic-title">
+                        <span *ngIf="deliveryAddressId > 0">Edit</span><span *ngIf="deliveryAddressId == 0">Add New</span> Address
+                    </h2>
+                    <button type="button" class="close" aria-label="Close" (click)="closeModal('Cross click')">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+            </div>
+            <div id="addNewAddress">
+                <form [formGroup]="addNewAddressForm" (ngSubmit)="addNewAddress()">
+                    <div class="row mb-3">
+                        <div class="col-12 addAddressType">
+                            <!--<label class="mb-2">Adddress Type</label>-->
+                            <div class="addAddressTypeLabel">
+                                <label class="customCheckBox" [ngClass]="{'activeLabel' : setAddressType=='H'}">
+                                    <input type="radio" [checked]="setAddressType == 'H'" name="setAddressType" (click)="onSetAdressType('H')" />Home
+                                    Address<span class="checkmark"></span>
+                                </label>
+                                <label class="customCheckBox" [ngClass]="{'activeLabel' : setAddressType=='O'}">
+                                    <input type="radio" [checked]="setAddressType == 'O'" name="setAddressType" (click)="onSetAdressType('O')" />Office
+                                    Address<span class="checkmark"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3 addAddressRow">
+                        <div class="col-6">
+                            <label class="pb-2">First Name</label>
+                            <input type="text" formControlName="firstName" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" placeholder="Enter first name"
+                                autocomplete="off" />
+                            <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+                                <div *ngIf="f.firstName.errors.required">First name is required</div>
+                                <div *ngIf="f.firstName.errors.maxlength">First name should be less than 50 character</div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <label class="pb-2">Last Name</label>
+                            <input type="text" formControlName="lastName" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"
+                                placeholder="Enter last name" />
+                            <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+                                <div *ngIf="f.lastName.errors.required">Last name is required</div>
+                                <div *ngIf="f.lastName.errors.maxlength">Last name should be less than 50 character</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3 addAddressRow">
+                        <div class="col-12">
+                            <label class="pb-2">Address</label>
+                            <input type="text" ngx-google-places-autocomplete
+                                (onAddressChange)="handleAddressChange($event)" formControlName="address"
+                                class="form-control" [ngClass]="{ 'is-invalid': submitted && f.address.errors }" />
+                            <div *ngIf="submitted && f.address.errors" class="invalid-feedback">
+                                <div *ngIf="f.address.errors.required">Address is required</div>
+                                <div *ngIf="f.address.errors.maxlength">Address should be less than 200 character</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3 addAddressRow">
+                        <div class="col-4">
+                            <label class="pb-2">City</label>
+                            <input type="text" formControlName="city" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.city.errors }" placeholder="Enter city name" />
+                            <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
+                                <div *ngIf="f.city.errors.required">City is required</div>
+                                <div *ngIf="f.city.errors.maxlength">City should be less than 50 character</div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <label class="pb-2">State</label>
+                            <input type="text" formControlName="state" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.state.errors }" placeholder="Enter state name" />
+                            <div *ngIf="submitted && f.state.errors" class="invalid-feedback">
+                                <div *ngIf="f.state.errors.required">State is required</div>
+                                <div *ngIf="f.state.errors.maxlength">State should be less than 50 character</div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <label class="pb-2">Zip Code</label>
+                            <input type="text" formControlName="zipCode" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.zipCode.errors }" placeholder="Enter zipcode" />
+                            <div *ngIf="submitted && f.zipCode.errors" class="invalid-feedback">
+                                <div *ngIf="f.zipCode.errors.required">Zipcode is required</div>
+                                <div *ngIf="f.zipCode.errors.maxlength">Zipcode should be less than 10 character</div>
+                            </div>
+                        </div>
+                    </div>    
+                    <!-- <div class="deliveryRow1">
+                        <div class="checkoutTypeLabel">
+                            <label>Set As Default</label>
+                            <label class="customCheckBox" [ngClass]="{'activeLabel' : setAsDefault=='Y'}">
+                                <input type="radio" [checked]="setAsDefault == 'Y'" name="setAsDefault" value="Y"
+                                    (click)="onSetAsDefault('Y')" />Yes <span class="checkmark"></span>
+                            </label>
+                            <label class="customCheckBox" [ngClass]="{'activeLabel' : setAsDefault=='N'}">
+                                <input type="radio" [checked]="setAsDefault == 'N'" name="setAsDefault" value="N"
+                                    (click)="onSetAsDefault('N')" />No<span class="checkmark"></span>
+                            </label>
+                        </div>
+                    </div>-->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <button type="submit" class="proceedBtn">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <div class="container">
+    <input ngx-google-places-autocomplete (onAddressChange)="handleAddressChange($event)" /> 
+    <p>Address: {{ userAddress }}</p>
+    <p>Latitude: {{ userLatitude }}</p>
+    <p>Longitude: {{ userLongitude }}</p>
+</div> -->

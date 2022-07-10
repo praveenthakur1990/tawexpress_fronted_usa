@@ -1,0 +1,45 @@
+<div class="row" [ngClass]="{'myAccountLeft' : IsCheckoutPage==true}">
+    <div class="col-12" [ngClass]="{'required' : isRequiredAddress==true}">
+        <div class="col-12 myAccountHeading mb-4">
+            <h3>Delivery Addresses</h3>
+            <button class="addAddressBtn" type="button" (click)="openAddNewAddressModal(0,null)">Add New</button>
+        </div>
+        <div class="col-12">
+            <div class="row deliveryAddressRow" [ngClass]="{'deliverymargin' : IsCheckoutPage==false}"
+                *ngFor="let home of objHomeDeliveryAddress;let index = index">
+                <div class="col-9 deliveryAddressRowLeft">
+                    <label class="customCheckBox">
+                        <input type="radio" *ngIf="IsCheckoutPage" name="deliveryAddress"
+                            (click)='onSelectAdress(home.id)'><span [ngClass]="{'checkmark' : IsCheckoutPage==true}"
+                            class="checkoutRadioBtn"></span>
+                        <h5 *ngIf="objHomeDeliveryAddress.length > 0 && objDeliveryAddresses.length > 0">Home Address
+                        </h5>
+                        <p>{{home.firstName}} {{home.lastName}}, {{home.address}} - {{home.zipCode}}</p>
+                    </label>
+                </div>
+                <div class="col-3 deliveryAddressRowRight">
+                    <button type="button" (click)="openAddNewAddressModal(home.id,home)">Edit</button>
+                </div>
+            </div>
+            <div class="row deliveryAddressRow" [ngClass]="{'deliverymargin' : IsCheckoutPage==false}"
+                *ngFor="let office of objOfficeDeliveryAddress;let index = index">
+                <div class="col-9 deliveryAddressRowLeft">
+                    <label class="customCheckBox">
+                        <input type="radio" *ngIf="IsCheckoutPage" name="deliveryAddress"
+                            (click)='onSelectAdress(office.id)'><span [ngClass]="{'checkmark' : IsCheckoutPage==true}"
+                            class="checkoutRadioBtn"></span>
+                        <h5 *ngIf="objOfficeDeliveryAddress.length > 0  && objDeliveryAddresses.length > 0">Office
+                            Address</h5>
+                        <p>{{office.firstName}} {{office.lastName}}, {{office.address}} - {{office.zipCode}}</p>
+                    </label>
+                </div>
+                <div class="col-3 deliveryAddressRowRight">
+                    <button type="button" (click)="openAddNewAddressModal(office.id,office)">Edit</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="noOrderBlock" *ngIf="objDeliveryAddresses.length == 0">No address added yet!</div>
+        </div>
+    </div>
+</div>

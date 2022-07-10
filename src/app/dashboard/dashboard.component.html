@@ -1,0 +1,102 @@
+<div class="bannerSection" *ngIf="isbannerList">
+    <ngb-carousel [showNavigationArrows]="true" [showNavigationIndicators]="true" [interval]="10000" [keyboard]="false"
+        [pauseOnHover]="false" [wrap]="true">
+        <ng-template ngbSlide *ngFor="let img of objStoreInfo.bannerList;let j = index">
+            <img src="{{img.imagePath}}" alt="image" class="advertismentSec" />
+        </ng-template>
+
+    </ngb-carousel>
+</div>
+<div class="bannerSection" *ngIf="!isbannerList">
+    <ngb-carousel [showNavigationArrows]="true" [showNavigationIndicators]="true" [interval]="10000" [keyboard]="false"
+        [pauseOnHover]="false" [wrap]="true">
+        <ng-template ngbSlide>
+            <img src="../../assets/img/banner-2.png" alt="image" class="advertismentSec" />
+        </ng-template>
+    </ngb-carousel>
+</div>
+
+
+<div class="pageWrapper mb-lg-5 mt-lg-5 mb-3 mt-3">
+    <div class="row">
+        <div class="col-12 bestDealsHeading">
+            <h2><b>Best Deals of the day</b></h2>
+        </div>
+        <div class="col-lg-4 mb-4">
+            <img src="../../assets/img/offer-1.png" alt="deal" class="offers" />
+        </div>
+        <div class="col-lg-4 mb-4">
+            <img src="../../assets/img/offer-2.png" alt="deal" class="offers" />
+        </div>
+        <div class="col-lg-4 mb-4">
+            <img src="../../assets/img/offer-3.png" alt="deal" class="offers" />
+        </div>
+    </div>
+</div>
+<!--deals section-->
+<div *ngFor="let cat of objProductsDataList;let index = index">
+    <div class="pageWrapper">
+        <div class="row" *ngIf="isAdvList">
+            <div *ngIf="index==2">
+                <div class="col-12 mb-5" *ngFor="let img of objStoreInfo.advImgList;let j = index">
+                    <img *ngIf="j==0" src="{{img.imagePath}}" alt="image" class="advertismentSec" />
+                </div>
+            </div>
+            <div *ngIf="index==5">
+                <div class="col-12 mb-5" *ngFor="let img of objStoreInfo.advImgList;let j = index">
+                    <img *ngIf="j==1" src="{{img.imagePath}}" alt="image" class="advertismentSec" />
+                </div>
+            </div>
+            <div *ngIf="index==7">
+                <div class="col-12 mb-5" *ngFor="let img of objStoreInfo.advImgList;let j = index">
+                    <img *ngIf="j==2" src="{{img.imagePath}}" alt="image" class="advertismentSec" />
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="!isAdvList">
+            <div class="col-12 mb-5" *ngIf="index==2">
+                <img src="../../assets/img/Advertisment.png" alt="image" class="advertismentSec" />
+            </div>
+            <!--Advertisment Section-->
+            <div class="col-12 mb-5" *ngIf="index==5">
+                <img src="../../assets/img/Advertisment-2.png" alt="image" class="advertismentSec" />
+            </div>
+            <!--Advertisment Section-->
+        </div>
+
+
+    </div>
+    <div class="pageWrapper">
+        <div class="row">
+            <div class="col-12">
+                <div class="sectionHeading">
+                    <h2>{{cat.categoryName}}</h2>
+                    <span><a [routerLink]="['/products',cat.categoryId]">View More <i
+                                class="icon-arrow customIcon ms-1"></i></a></span>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="mb-lg-5 mb-2" id="scroller">
+                    <ul class="productCol">
+                        <li *ngFor="let prod of cat.products;let j = index"
+                            (click)="!prod.isAdded && openProductInfoModalPopup(prod,cat)">
+                            <div class="productInfo">
+                                <p *ngIf="prod.offerType=='1'" class="discountOffer">{{prod.finalOfferValue}}</p>
+                                <img src="{{prod.productImage}}" alt="image" />
+                                <p *ngIf="prod.offerType=='0'" class="buyOneGetFree">{{prod.finalValue}}</p>
+                                <p [ngClass]="{'oldPrice': prod.offerType=='2','':''}">{{currencySymbol}}{{ prod.price |
+                                    number : '1.2-2' }}</p>
+                                <p *ngIf="prod.offerType=='2'" class="newPrice">{{currencySymbol}}{{prod.finalValue |
+                                    number :'1.2-2'}}</p>
+                                <h3 title="{{prod.productName}}">{{prod.productName}}</h3>
+                                <button type="button" [class.disabled]="prod.isAdded === true">
+                                    <span class="icon-cart customIcon"></span>{{ prod.isAdded == true ? 'Added' : 'Add
+                                    to cart' }}</button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

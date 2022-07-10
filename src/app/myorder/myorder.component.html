@@ -1,0 +1,28 @@
+<div class="myAccountHeading" infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50" [scrollWindow]="false" (scrolled)="onScroll()" style="height: 700px;
+    overflow-x: hidden;">
+    <h3>My Orders</h3>
+    <div class="row myOrderRow" *ngFor="let item of objOrderList">
+        <div class="col-lg-5 col-sm-5 col-5 myOrderRowLeft">
+            <p>Order Number</p>
+            <p>Order Date</p>
+            <p>Order Status</p>
+            <p>Order Total</p>
+        </div>
+        <div class="col-lg-4 col-sm-7 col-7 myOrderRowCenter">
+            <p>{{item.orderNo}}</p>
+            <p>{{item.orderedDate | date:'medium'}}</p>
+            <p class="orderOutDelivery" *ngIf="item.status=='A'">Accepted</p>
+            <p class="orderOutDelivery" *ngIf="item.status=='C'">Cancelled</p>
+            <p class="orderOutDelivery" *ngIf="item.status=='R'">Rejected</p>
+            <p class="orderOutDelivery" *ngIf="item.status=='O'">Out of delivery</p>
+            <p class="orderOutDelivery" *ngIf="item.status=='D'">Delivered</p>
+            <p>{{currencySymbol}}{{item.capturedAmt | number : '1.2-2'}}</p>
+        </div>
+        <div class="col-lg-3 col-12 myOrderRowRight myOrderRowRightMobile">
+            <button type="button" (click)="openOrderDetailModal(item)">View Details</button>
+        </div>
+    </div>  
+    <div class="col-12">
+        <div class="noOrderBlock" *ngIf="objOrderList.length == 0">No order added yet!</div>
+    </div>
+</div>
